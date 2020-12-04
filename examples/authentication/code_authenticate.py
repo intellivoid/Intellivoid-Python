@@ -17,3 +17,12 @@ request_auth_results = coa.request_authentication(
 
 print("Authenticate: {}".format(request_auth_results["authentication_url"]))
 print("The access token will be provided via the Authentication Prompt.")
+
+access_token = input("Authentication Token: ")
+
+results = coa.get_access_token(
+    application_id=application_id,
+    secret_key=secret_key,
+    access_token=access_token
+)
+print(results)

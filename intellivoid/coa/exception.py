@@ -16,8 +16,8 @@ class CrossOverAuthenticationError(Exception):
         self.status_code = status_code
         self.content = content
         self.request_id = request_id
-        self.message = content.get("message", None) if content else "Unknown"
-        self.error_code = content.get("error_code", None) if content else "Unknown"
+        self.message = content["error"]["message"]
+        self.error_code = content["error"]["error_code"]
         super().__init__(self.message or content)
 
     @staticmethod

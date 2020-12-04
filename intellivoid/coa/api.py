@@ -2,16 +2,25 @@ from . import exception
 
 import requests
 
+try:
+    from urllib import urlencode
+except ImportError:
+    from urllib.parse import urlencode
+
 __all__ = ["CrossOverAuthentication"]
 
 
 class CrossOverAuthentication(object):
-    def __init__(self, endpoint="https://api.intellivoid.net/intellivoid/auth/coa"):
+    def __init__(self,
+                 endpoint="https://api.intellivoid.net/intellivoid/coa",
+                 accounts_endpoint="https://accounts.intellivoid.net"):
         """
         CrossOverAuthentication Public Constructor
 
         :param endpoint:
+        :param accounts_endpoint:
         """
+        self.accounts_endpoint = accounts_endpoint
         self.endpoint = endpoint
 
     def _send(self, path, **payload):
@@ -93,4 +102,21 @@ class CrossOverAuthentication(object):
         parameters["secret_key"] = secret_key,
         parameters["access_token"] = access_token
 
-        return self._send("auth/process_authentication", **parameters)["results"]
+        return self._send("auth/get_access_token", **parameters)["results"]
+
+    def create_authentication_url(self, application_id, redirect, **parameters):
+        """
+        Creates a standard authentication URL which will automatically generate
+        a request token upon visiting and redirect the user to the redirect URL
+        with the access token in the GET parameter
+
+        :param application_id:
+        :param redirect:
+        :param parameters:
+        :return:
+        """
+        parameters["action"] = "request_authentication"
+        parameters["application_id"] = application_id
+        parameters["redirect"] = redirect
+
+        return "{}/auth/coa?{}".format(self.accounts_endpoint, urlencode(parameters))
