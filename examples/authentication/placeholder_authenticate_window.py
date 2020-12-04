@@ -1,5 +1,5 @@
 import webview
-from intellivoid.coa import CrossOverAuthentication
+from intellivoid.coa.sync import CrossOverAuthentication
 
 # This example is the same as placeholder_authenticate.py but uses pywebview to
 # show a pop-up window. If you pass on "require_close" then the window would close if possible
@@ -7,7 +7,7 @@ from intellivoid.coa import CrossOverAuthentication
 
 # For this example, automatic closing won't work for some reason.
 
-from intellivoid.coa.exception import RequestTokenExpiredError, \
+from intellivoid.coa.exceptions import RequestTokenExpired, \
     CrossOverAuthenticationError
 
 # Prepare COA!
@@ -36,7 +36,7 @@ def process_authentication(window, application_id, secret_key, request_token):
             request_token=request_token,
             poll_results=True)
         print("Access Token Results: {0}".format(access_token_results))
-    except RequestTokenExpiredError as e:
+    except RequestTokenExpired as e:
         print("You took too long to login and authenticate")
     except CrossOverAuthenticationError as e:
         print(e.message)

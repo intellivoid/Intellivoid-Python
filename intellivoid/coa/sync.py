@@ -1,11 +1,28 @@
-from . import exception
+#  Intellivoid - COA API Interface
+#  Copyright (C) 2020 Intellivoid <https://github.com/intellivoid>
+#
+#  This file is part of the Intellivoid package.
+#
+#  This package is free software: you can redistribute it and/or modify
+#  it under the terms of the GNU Lesser General Public License as published
+#  by the Free Software Foundation, either version 3 of the License, or
+#  (at your option) any later version.
+#
+#  This package is distributed in the hope that it will be useful,
+#  but WITHOUT ANY WARRANTY; without even the implied warranty of
+#  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+#  GNU Lesser General Public License for more details.
+#
+#  You should have received a copy of the GNU Lesser General Public License
+#  along with this package. If not, see <http://www.gnu.org/licenses/>.
 
+from . import exceptions
 import requests
-
 try:
     from urllib import urlencode
 except ImportError:
     from urllib.parse import urlencode
+
 
 __all__ = ["CrossOverAuthentication"]
 
@@ -36,9 +53,9 @@ class CrossOverAuthentication(object):
         request_id = None
         if "x-request-id" in response.headers:
             request_id = response.headers["x-request-id"]
-        return exception.CrossOverAuthenticationError.parse_and_raise(response.status_code,
-                                                                      response.text,
-                                                                      request_id)
+        return exceptions.CrossOverAuthenticationError.parse_and_raise(response.status_code,
+                                                                       response.text,
+                                                                       request_id)
 
     def request_authentication(self, application_id, **parameters):
         """
@@ -71,7 +88,7 @@ class CrossOverAuthentication(object):
             while True:
                 try:
                     return self._send("auth/process_authentication", **parameters)["results"]
-                except exception.AwaitingAuthenticationError:
+                except exceptions.AwaitingAuthentication:
                     # We're waiting for the user to authenticate, so this isn't an error that we should raise
                     pass
         return self._send("auth/process_authentication", **parameters)["results"]
