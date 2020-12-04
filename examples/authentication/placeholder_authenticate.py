@@ -1,8 +1,11 @@
 from intellivoid.coa import CrossOverAuthentication
 
-coa = CrossOverAuthentication("http://api.intellivoid.net/intellivoid/v1/auth/coa")
-application_id = "<APP ID>"
-secret_key = "<SECRET KEY>"
+# Use your own Application ID and Secret Key. You'll be able to set your own
+# logo, name and permissions. These Application is for demonstration purposes only
+# and nobody can access your information using these Applications unless they have your Access Token
+coa = CrossOverAuthentication("https://api.intellivoid.net/intellivoid/v1/coa")
+application_id = "APP65640a935039be5570428b6e74747811b0a290210e9e2d2f6722d8a54966ac171a4d5f1c"
+secret_key = "51649e76483ff7de673e299a8056675409c957ec020998223ea02b3ccbaec1220747373d"
 
 print("Requesting authentication token")
 request_auth_results = coa.request_authentication(
@@ -11,7 +14,7 @@ request_auth_results = coa.request_authentication(
 
 print("Authenticate: {}".format(request_auth_results["authentication_url"]))
 print("Waiting for authentication")
-access_token_results = coa.get_access_token(
+access_token_results = coa.process_authentication(
     application_id=application_id,
     secret_key=secret_key,
     request_token=request_auth_results["request_token"],
