@@ -24,7 +24,7 @@ class CrossOverAuthenticationError(Exception):
     def parse_and_raise(status_code, content, request_id):
         """
         Attempts to parse the request, if it's an error then it will raise
-        the appropiate exception
+        the appropriate exception
 
         :param status_code:
         :param content:
