@@ -16,48 +16,54 @@
 #  You should have received a copy of the GNU Lesser General Public License
 #  along with this package.  If not, see <http://www.gnu.org/licenses/>.
 
-import json
-
-__all__ = ["CrossOverAuthenticationError"]
-
 
 class CrossOverAuthenticationError(Exception):
 
-    def __init__(self, status_code, content, request_id):
+    def __init__(self, status_code, content, request_id, response):
         """
         CrossOverAuthenticationError Public Constructor
 
         :param status_code:
         :param content:
         :param request_id:
+        :param response:
         """
         self.status_code = status_code
         self.content = content
+        self.response = response
         self.request_id = request_id
-        self.error_code = content["error"]["error_code"]
-        self.message = content["error"]["message"]
-        self.type = content["error"]["type"]
+        self.message = None
+        self.error_code = None
+        self.type = None
+
+        # This part can be improved
+        if content is not None:
+            self.message = content["error"]["message"]
+            self.error_code = content["error"]["error_code"]
+            self.type = content["error"]["type"]
+
         super().__init__(self.message or content)
 
     @staticmethod
-    def parse_and_raise(status_code, response, request_id):
+    def parse_and_raise(status_code, content, request_id, response):
         """
         Attempts to parse the response object, if it's an error then it will raise
         the appropriate exception
 
         :param status_code:
-        :param response:
+        :param content:
         :param request_id:
+        :param response:
         :return:
         """
 
-        if response["success"] is False:
-            if "error" in response and "error_code" in response["error"]:
-                raise _mapping.get(response["error"]["error_code"],
-                                   CrossOverAuthenticationError)(status_code, response, request_id)
+        if content["success"] is False:
+            if "error" in content and "error_code" in content["error"]:
+                raise _mapping.get(content["error"]["error_code"],
+                                   CrossOverAuthenticationError)(status_code, content, request_id, response)
             else:
-                raise CrossOverAuthenticationError(status_code, "", request_id)
-        return response
+                raise CrossOverAuthenticationError(status_code, None, request_id, response)
+        return content
 
 
 class AccessDeniedSecurityIssue(CrossOverAuthenticationError):

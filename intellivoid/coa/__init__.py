@@ -18,10 +18,3 @@
 
 from . import sync, aio
 from . import exceptions, sync
-
-__all__ = [
-            "sync",
-            "aio",
-            "exceptions"]
-__all__.extend(sync.__all__)
-__all__.extend(exceptions.__all__)

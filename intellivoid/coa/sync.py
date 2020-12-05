@@ -25,8 +25,6 @@ try:
 except ImportError:
     from urllib.parse import urlencode
 
-__all__ = ["CrossOverAuthentication"]
-
 
 class CrossOverAuthentication(object):
     def __init__(self,

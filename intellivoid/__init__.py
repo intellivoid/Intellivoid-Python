@@ -15,8 +15,3 @@
 #
 #  You should have received a copy of the GNU Lesser General Public License
 #  along with this package.  If not, see <http://www.gnu.org/licenses/>.
-
-from . import coa
-from .coa import *
-
-__all__ = ["coa", "exception"] + coa.__all__ + exceptions

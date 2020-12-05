@@ -1,15 +1,11 @@
 import webview
 from intellivoid.coa.sync import CrossOverAuthentication
+from intellivoid.coa import exceptions as coa_exceptions
 
 # This example is the same as placeholder_authenticate.py but uses pywebview to
 # show a pop-up window. If you pass on "require_close" then the window would close if possible
 # and show an alternative text telling the user that they can close the window.
 
-# For this example, automatic closing won't work for some reason.
-
-from intellivoid.coa import exceptions as coa_exceptions
-
-# Prepare COA!
 
 # Use your own Application ID and Secret Key. You'll be able to set your own
 # logo, name and permissions. These Application is for demonstration purposes only

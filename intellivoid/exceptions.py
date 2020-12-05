@@ -15,56 +15,65 @@ import json
 
 class ServiceException(Exception):
 
-    def __init__(self, status_code, content, request_id):
+    def __init__(self, status_code, content, request_id, response):
         """
         ServiceException Public Constructor
 
         :param status_code:
         :param content:
         :param request_id:
+        :param response:
         """
         self.status_code = status_code
         self.content = content
+        self.response = response
         self.request_id = request_id
-        self.message = content["error"]["message"]
-        self.error_code = content["error"]["error_code"]
-        self.type = content["error"]["type"]
+        self.message = None
+        self.error_code = None
+        self.type = None
+
+        # This part can be improved
+        if content is not None:
+            self.message = content["error"]["message"]
+            self.error_code = content["error"]["error_code"]
+            self.type = content["error"]["type"]
+
         super().__init__(self.message or content)
 
     @staticmethod
-    def parse_and_raise(status_code, content, request_id):
+    def parse_and_raise(status_code, response, request_id):
         """
         Parses the response and detects the error type
 
         :param status_code:
-        :param content:
+        :param response:
         :param request_id:
         :return:
         """
 
         try:
-            response = json.loads(content)
+            content = json.loads(response)
         except json.decoder.JSONDecodeError:
-            raise ServiceException(status_code, content, request_id)  # Should it return the content too?
+            raise ServiceException(status_code, None, request_id, response)
 
         # Parse the response
-        if response["success"] is False:
+        if content["success"] is False:
             # Check if the type is available
-            if "error" in response and "type" in response["error"]:
+            if "error" in content and "type" in content["error"]:
 
                 # COA Exception handler
-                if response["error"]["type"].lower() == "coa":
-                    CrossOverAuthenticationError.parse_and_raise(status_code, response, request_id)
+                if content["error"]["type"].lower() == "coa":
+                    CrossOverAuthenticationError.parse_and_raise(status_code, content, request_id, response)
                     # Should it manually raise the exception here if the parse_and_raise method does nothing?
 
-                if response["error"]["type"].lower() == "server":
-                    raise _mapping.get(response["error"]["error_code"],
-                                       ServiceException)(status_code, response, request_id)
+                if content["error"]["type"].lower() == "server":
+                    raise _mapping.get(content["error"]["error_code"],
+                                       ServiceException)(status_code, content, request_id, response)
 
             # If detecting the type fails, it's a generic error
-            raise ServiceException(status_code, content, request_id)
+            raise ServiceException(status_code, content, request_id, response)
 
-        return response
+        return content
 
 
 class InternalServerError(ServiceException):
