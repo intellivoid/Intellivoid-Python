@@ -53,11 +53,11 @@ class ServiceException(Exception):
             if "error" in response and "type" in response["error"]:
 
                 # COA Exception handler
-                if response["error"]["type"].lower() is "coa":
+                if response["error"]["type"].lower() == "coa":
                     CrossOverAuthenticationError.parse_and_raise(status_code, response, request_id)
                     # Should it manually raise the exception here if the parse_and_raise method does nothing?
 
-                if response["error"]["type"].lower() is "server":
+                if response["error"]["type"].lower() == "server":
                     raise _mapping.get(response["error"]["error_code"],
                                        ServiceException)(status_code, response, request_id)
 
