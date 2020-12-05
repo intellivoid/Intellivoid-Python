@@ -16,6 +16,12 @@ The packages are specular and their methods and contents are identical, except f
 Feel free to file an issue if you find bugs and to contribute code via pull requests, but note that
 low quality or low effort contributions will be ignored.
 
+## WORK IN PROGRESS
+
+This project is not completed as it's currently being used to test the internal development
+builds of Intellivoid API. Incomplete code and or bugs may be a frequent yet expected occurrence
+in this project until the first version is officially released.
+
 ## Credits
 
 This library is developed by and copyrighted by Zi Xing Narrakas and/or Intellivoid and may only be used in compliance with the
