@@ -10,7 +10,7 @@ from intellivoid.coa import exceptions as coa_exceptions
 # Use your own Application ID and Secret Key. You'll be able to set your own
 # logo, name and permissions. These Application is for demonstration purposes only
 # and nobody can access your information using these Applications unless they have your Access Token
-coa = CrossOverAuthentication("https://api.intellivoid.net/intellivoid/v1/coa")
+coa = CrossOverAuthentication()
 application_id = "APP65640a935039be5570428b6e74747811b0a290210e9e2d2f6722d8a54966ac171a4d5f1c"
 secret_key = "51649e76483ff7de673e299a8056675409c957ec020998223ea02b3ccbaec1220747373d"
 
@@ -25,12 +25,12 @@ request_auth_results = coa.request_authentication(
 def process_authentication(window, app_id, secret, request_token):
     try:
         print("Awaiting authentication")
-        access_token_results = coa.process_authentication(
+        process_authentication_results = coa.process_authentication(
             application_id=app_id,
             secret_key=secret,
             request_token=request_token,
             poll_results=True)
-        print("Access Token Results: {0}".format(access_token_results))
+        print("Access Token: {0}".format(process_authentication_results["access_token"]))
     except coa_exceptions.RequestTokenExpired:
         print("You took too long to login and authenticate")
     except coa_exceptions.CrossOverAuthenticationError as e:

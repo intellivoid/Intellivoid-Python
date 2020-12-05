@@ -28,7 +28,7 @@ except ImportError:
 
 class CrossOverAuthentication(object):
     def __init__(self,
-                 endpoint: str = "https://api.intellivoid.net/intellivoid/coa",
+                 endpoint: str = "https://api.intellivoid.net/intellivoid/v1/coa",
                  accounts_endpoint: str = "https://accounts.intellivoid.net"):
         """
         CrossOverAuthentication Public Constructor
