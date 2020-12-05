@@ -19,4 +19,4 @@
 from . import coa
 from .coa import *
 
-__all__ = ["coa"] + coa.__all__
+__all__ = ["coa", "exception"] + coa.__all__ + exceptions

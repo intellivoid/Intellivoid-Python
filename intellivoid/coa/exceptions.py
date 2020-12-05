@@ -34,26 +34,23 @@ class CrossOverAuthenticationError(Exception):
         self.status_code = status_code
         self.content = content
         self.request_id = request_id
-        self.message = content["error"]["message"]
         self.error_code = content["error"]["error_code"]
+        self.message = content["error"]["message"]
+        self.type = content["error"]["type"]
         super().__init__(self.message or content)
 
     @staticmethod
-    def parse_and_raise(status_code, content, request_id):
+    def parse_and_raise(status_code, response, request_id):
         """
-        Attempts to parse the request, if it's an error then it will raise
+        Attempts to parse the response object, if it's an error then it will raise
         the appropriate exception
 
         :param status_code:
-        :param content:
+        :param response:
         :param request_id:
         :return:
         """
 
-        try:
-            response = json.loads(content)
-        except json.decoder.JSONDecodeError:
-            raise CrossOverAuthenticationError(status_code, "", request_id)
         if response["success"] is False:
             if "error" in response and "error_code" in response["error"]:
                 raise _mapping.get(response["error"]["error_code"],

@@ -16,13 +16,14 @@
 #  You should have received a copy of the GNU Lesser General Public License
 #  along with this package.  If not, see <http://www.gnu.org/licenses/>.
 
-from . import exceptions
+from intellivoid import exceptions as service_exceptions
+from . import exceptions as coa_exceptions
 import httpx
+
 try:
     from urllib import urlencode
 except ImportError:
     from urllib.parse import urlencode
-
 
 __all__ = ["CrossOverAuthentication"]
 
@@ -52,9 +53,10 @@ class CrossOverAuthentication(object):
         request_id = None
         if "x-request-id" in response.headers:
             request_id = response.headers["x-request-id"]
-        return exceptions.CrossOverAuthenticationError.parse_and_raise(response.status_code,
-                                                                       response.text,
-                                                                       request_id)
+
+        return service_exceptions.ServiceException.parse_and_raise(response.status_code,
+                                                                   response.text,
+                                                                   request_id)
 
     async def request_authentication(self, application_id, **parameters):
         """
@@ -88,7 +90,7 @@ class CrossOverAuthentication(object):
             while True:
                 try:
                     return (await self._send("auth/process_authentication", **parameters))["results"]
-                except exceptions.AwaitingAuthentication:
+                except coa_exceptions.AwaitingAuthentication:
                     # We're waiting for the user to authenticate, so this isn't an error that we should raise
                     continue
         return (await self._send("auth/process_authentication", **parameters))["results"]

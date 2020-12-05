@@ -7,8 +7,7 @@ from intellivoid.coa.sync import CrossOverAuthentication
 
 # For this example, automatic closing won't work for some reason.
 
-from intellivoid.coa.exceptions import RequestTokenExpired, \
-    CrossOverAuthenticationError
+from intellivoid.coa import exceptions as coa_exceptions
 
 # Prepare COA!
 
@@ -27,18 +26,18 @@ request_auth_results = coa.request_authentication(
     secured=0)
 
 
-def process_authentication(window, application_id, secret_key, request_token):
+def process_authentication(window, app_id, secret, request_token):
     try:
         print("Awaiting authentication")
         access_token_results = coa.process_authentication(
-            application_id=application_id,
-            secret_key=secret_key,
+            application_id=app_id,
+            secret_key=secret,
             request_token=request_token,
             poll_results=True)
         print("Access Token Results: {0}".format(access_token_results))
-    except RequestTokenExpired as e:
+    except coa_exceptions.RequestTokenExpired:
         print("You took too long to login and authenticate")
-    except CrossOverAuthenticationError as e:
+    except coa_exceptions.CrossOverAuthenticationError as e:
         print(e.message)
     window.destroy()
 
