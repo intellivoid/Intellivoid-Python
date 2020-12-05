@@ -116,7 +116,7 @@ class RequestTokenExpired(CrossOverAuthenticationError):
     pass
 
 
-class UserDisabled(CrossOverAuthenticationError):
+class UserRevokedAccess(CrossOverAuthenticationError):
     """
     The user revoked access to the Application, the Application must request authentication again.
     """
@@ -268,6 +268,14 @@ class InternalServerError(CrossOverAuthenticationError):
     pass
 
 
+class InsufficientPermissions(CrossOverAuthenticationError):
+    """
+    This error is raised when the client fails to provide the required ‘application_id’ parameter.
+    """
+
+    pass
+
+
 _mapping = {
     -1: InternalServerError,
     1: MissingParameterApplicationId,
@@ -286,7 +294,8 @@ _mapping = {
     26: AccountNotFound,
     27: AccessTokenExpired,
     28: AccountSuspended,
-    29: UserDisabled,
+    29: UserRevokedAccess,
+    30: InsufficientPermissions,
     34: RequestTokenExpired,
     35: UnsupportedApplicationAuthenticationType,
     39: MissingParameterRequestToken,
