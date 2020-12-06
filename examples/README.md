@@ -6,3 +6,4 @@ to authenticate and use the API to retrieve information.
 
  - [Authentication Examples](authentication) - [[?]](authentication/README.md)
  - [Getting User Information](user_information) - [[?]](user_information/README.md)
+ - [Application Settings/Variables](sync_settings) - [[?]](sync_settings/README.md)

@@ -1,4 +1,5 @@
 from .coa.exceptions import CrossOverAuthenticationError
+from .application.settings_exceptions import ApplicationSettingsError
 
 __all__ = ["ServiceException"]
 
@@ -64,7 +65,9 @@ class ServiceException(Exception):
                 # COA Exception handler
                 if content["error"]["type"].lower() == "coa":
                     CrossOverAuthenticationError.parse_and_raise(status_code, content, request_id, response)
-                    # Should it manually raise the exception here if the parse_and_raise method does nothing?
+
+                if content["error"]["type"].lower() == "settings":
+                    ApplicationSettingsError.parse_and_raise(status_code, content, request_id, response)
 
                 if content["error"]["type"].lower() == "server":
                     raise _mapping.get(content["error"]["error_code"],
