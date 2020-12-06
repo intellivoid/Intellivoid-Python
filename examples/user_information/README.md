@@ -24,3 +24,11 @@ default and is public information. you do need authentication to execute it.
 
 The Avatar URL(s) are public permalinks so you don't need to pass on any
 authentication to access these resources.
+
+
+## Get Email Example
+
+[get_email.py](get_email.py) is a basic example, much like [get_user.py](get_user.py)
+but with the purpose to get the users Email Address. This example will only work
+if the Application has permission to view the users email address. The user has the
+right to deny your Application the permission to view it but still can authenticate.
