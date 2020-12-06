@@ -61,3 +61,12 @@ class User(object):
         :return:
         """
         return self._send("get_email", **parameters)["results"]["email_address"]
+
+    def get_personal_information(self, **parameters):
+        """
+        Returns the user's email address, requires permission to view personal information
+
+        :param parameters:
+        :return:
+        """
+        return self._send("get_personal_information", **parameters)["results"]

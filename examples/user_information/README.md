@@ -32,3 +32,14 @@ authentication to access these resources.
 but with the purpose to get the users Email Address. This example will only work
 if the Application has permission to view the users email address. The user has the
 right to deny your Application the permission to view it but still can authenticate.
+
+
+## Get Personal Information Example
+
+[get_personal_information.py](get_personal_information.py) allows your application
+to retrieve personal information about the user if the user granted such permissions
+to your Application. This will include information like the users full name and birthday.
+
+However, this information is only available if the user entered this information
+to their Intellivoid Account, missing information will simply be null. The user is
+not obligated to enter personal information about themselves.
