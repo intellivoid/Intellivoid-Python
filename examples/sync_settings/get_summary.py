@@ -1,5 +1,5 @@
 from intellivoid.coa.sync import CrossOverAuthentication
-from intellivoid.application import Settings
+from intellivoid.application.settings.sync import Settings
 
 # This will authenticate using a basic Placeholder Authentication flow, for more details see
 # the authentication examples.

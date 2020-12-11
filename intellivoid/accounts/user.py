@@ -8,16 +8,22 @@ except ImportError:
 
 
 class User(object):
+
+    """
+    Public user object
+
+    :param application_id:
+    :param secret_key:
+    :param access_token:
+    :param endpoint:
+    """
+
     def __init__(self, application_id, secret_key, access_token,
                  endpoint="https://api.intellivoid.net/intellivoid/v1/accounts"):
         """
         User Public Constructor
-
-        :param application_id:
-        :param secret_key:
-        :param access_token:
-        :param endpoint:
         """
+
         self.endpoint = endpoint
         self.application_id = application_id
         self.secret_key = secret_key
@@ -51,6 +57,7 @@ class User(object):
         :param parameters:
         :return:
         """
+
         return self._send("get_user", **parameters)["results"]
 
     def get_email(self, **parameters):
@@ -60,6 +67,7 @@ class User(object):
         :param parameters:
         :return:
         """
+
         return self._send("get_email", **parameters)["results"]["email_address"]
 
     def get_personal_information(self, **parameters):
@@ -69,4 +77,5 @@ class User(object):
         :param parameters:
         :return:
         """
+
         return self._send("get_personal_information", **parameters)["results"]

@@ -9,16 +9,21 @@ except ImportError:
 
 
 class Settings(object):
+    """
+    Settings public object
+
+    :param application_id:
+    :param secret_key:
+    :param access_token:
+    :param endpoint:
+    """
+
     def __init__(self, application_id, secret_key, access_token,
                  endpoint="https://api.intellivoid.net/intellivoid/v1/application"):
         """
         Settings Public Constructor
-
-        :param application_id:
-        :param secret_key:
-        :param access_token:
-        :param endpoint:
         """
+
         self.endpoint = endpoint
         self.application_id = application_id
         self.secret_key = secret_key
@@ -52,6 +57,7 @@ class Settings(object):
         :param parameters:
         :return:
         """
+
         return self._send("settings/get_summary", **parameters)["results"]
 
     def add(self, variable_type, name, **parameters):
@@ -63,6 +69,7 @@ class Settings(object):
         :param parameters:
         :return:
         """
+
         parameters["type"] = variable_type
         parameters["name"] = name
 
@@ -83,6 +90,7 @@ class Settings(object):
         :param parameters:
         :return:
         """
+
         return self._send("settings/dump", **parameters)["results"]
 
     def clear(self, **parameters):
@@ -92,6 +100,7 @@ class Settings(object):
         :param parameters:
         :return:
         """
+
         return self._send("settings/clear", **parameters)["results"]
 
     def delete(self, name, **parameters):
@@ -102,6 +111,7 @@ class Settings(object):
         :param parameters:
         :return:
         """
+
         parameters["name"] = name
         return self._send("settings/delete", **parameters)["results"]
 
@@ -114,6 +124,7 @@ class Settings(object):
         :param parameters:
         :return:
         """
+
         parameters["name"] = name
         parameters["value"] = value
         return self._send("settings/append", **parameters)["results"]
@@ -126,5 +137,6 @@ class Settings(object):
         :param parameters:
         :return:
         """
+
         parameters["name"] = name
         return self._send("settings/get", **parameters)["results"]

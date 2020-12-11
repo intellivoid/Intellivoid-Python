@@ -1,14 +1,19 @@
 class ApplicationSettingsError(Exception):
 
+    """
+    Application Settings Error public object
+
+    :param status_code:
+    :param content:
+    :param request_id:
+    :param response:
+    """
+
     def __init__(self, status_code, content, request_id, response):
         """
         ApplicationSettingsError Public Constructor
-
-        :param status_code:
-        :param content:
-        :param request_id:
-        :param response:
         """
+
         self.status_code = status_code
         self.content = content
         self.response = response

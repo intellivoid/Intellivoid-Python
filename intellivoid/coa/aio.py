@@ -27,14 +27,19 @@ except ImportError:
 
 
 class CrossOverAuthentication(object):
+    """
+    CrossOverAuthentication public object
+
+    :param endpoint:
+    :param accounts_endpoint:
+    """
     def __init__(self,
                  endpoint: str = "https://api.intellivoid.net/intellivoid/v1/coa",
                  accounts_endpoint: str = "https://accounts.intellivoid.net"):
         """
         CrossOverAuthentication Public Constructor
-        :param endpoint:
-        :param accounts_endpoint:
         """
+
         self.accounts_endpoint = accounts_endpoint
         self.endpoint = endpoint
 
@@ -47,7 +52,8 @@ class CrossOverAuthentication(object):
         :param payload:
         :return:
         """
-        response = httpx.post("{}/{}".format(self.endpoint, path), data=payload)
+
+        response = httpx.post("{}/{}".format(self.endpoint, path), json=payload)
         request_id = None
         if "x-request-id" in response.headers:
             request_id = response.headers["x-request-id"]
@@ -66,6 +72,7 @@ class CrossOverAuthentication(object):
         :param parameters:
         :return:
         """
+
         parameters["application_id"] = application_id
         return (await self._send("auth/request_authentication", **parameters))["results"]
 
@@ -80,6 +87,7 @@ class CrossOverAuthentication(object):
         :param parameters:
         :return:
         """
+
         parameters["application_id"] = application_id
         parameters["secret_key"] = secret_key,
         parameters["request_token"] = request_token
@@ -101,6 +109,7 @@ class CrossOverAuthentication(object):
         :param parameters:
         :return:
         """
+
         parameters["application_id"] = application_id
         return (await self._send("application", **parameters))["results"]
 
@@ -115,6 +124,7 @@ class CrossOverAuthentication(object):
         :param parameters:
         :return:
         """
+
         parameters["application_id"] = application_id
         parameters["secret_key"] = secret_key,
         parameters["access_token"] = access_token
@@ -132,6 +142,7 @@ class CrossOverAuthentication(object):
         :param parameters:
         :return:
         """
+
         parameters["action"] = "request_authentication"
         parameters["application_id"] = application_id
         parameters["redirect"] = redirect

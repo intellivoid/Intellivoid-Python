@@ -1,17 +1,15 @@
+# This file is for handling multiple exception types by parsing the response and raising the correct
+# exception. The API can return multiple errors for multiple things, this class is designed to figure
+# out what caused the error and raise its appropriate exceptions.
+# This could be improved in the future
+
+
 from .coa.exceptions import CrossOverAuthenticationError
-from .application.settings_exceptions import ApplicationSettingsError
+from .application.exceptions import ApplicationSettingsError
+import json
+
 
 __all__ = ["ServiceException"]
-
-"""
-This file is for handling multiple exception types by parsing the response and raising the correct
-exception. The API can return multiple errors for multiple things, this class is designed to figure
-out what caused the error and raise it's appropriate exceptions.
-
-This could be improved in the future
-"""
-
-import json
 
 
 class ServiceException(Exception):
@@ -25,6 +23,7 @@ class ServiceException(Exception):
         :param request_id:
         :param response:
         """
+
         self.status_code = status_code
         self.content = content
         self.response = response
@@ -32,13 +31,11 @@ class ServiceException(Exception):
         self.message = None
         self.error_code = None
         self.type = None
-
         # This part can be improved
         if content is not None:
             self.message = content["error"]["message"]
             self.error_code = content["error"]["error_code"]
             self.type = content["error"]["type"]
-
         super().__init__(self.message or content)
 
     @staticmethod
@@ -61,21 +58,16 @@ class ServiceException(Exception):
         if content["success"] is False:
             # Check if the type is available
             if "error" in content and "type" in content["error"]:
-
                 # COA Exception handler
                 if content["error"]["type"].lower() == "coa":
                     CrossOverAuthenticationError.parse_and_raise(status_code, content, request_id, response)
-
                 if content["error"]["type"].lower() == "settings":
                     ApplicationSettingsError.parse_and_raise(status_code, content, request_id, response)
-
                 if content["error"]["type"].lower() == "server":
                     raise _mapping.get(content["error"]["error_code"],
                                        ServiceException)(status_code, content, request_id, response)
-
             # If detecting the type fails, it's a generic error
             raise ServiceException(status_code, content, request_id, response)
-
         return content
 
 
