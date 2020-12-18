@@ -24,12 +24,12 @@ with open("README.md", "r") as file:
 setup(
     name='intellivoid',
     version='1.0.0',
-    description='Official Intellivoid & COA API Wrapper for Python',
+    description='Official Intellivoid Services API Wrapper for Python',
     long_description=long_description,
     long_description_content_type="text/markdown",
-    packages=['intellivoid', 'intellivoid.coa'],
+    packages=['intellivoid', 'intellivoid.coa', 'intellivoid.application', 'intellivoid.accounts'],
     package_dir={
-        'coffeehouse': 'coffeehouse'
+        'intellivoid': 'intellivoid'
     },
     author='Intellivoid Technologies',
     author_email='netkas@intellivoid.net',
