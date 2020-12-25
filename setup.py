@@ -35,6 +35,7 @@ setup(
     author_email='netkas@intellivoid.net',
     url='https://accounts.intellivoid.net/',
     install_requires=[
-        'requests>=2.3.0'
+        'requests>=2.3.0',
+        'httpx'
     ]
 )
