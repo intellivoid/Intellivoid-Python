@@ -23,11 +23,11 @@ with open("README.md", "r") as file:
 
 setup(
     name='intellivoid',
-    version='1.0.1',
+    version='1.0.2',
     description='Official Intellivoid Services API Wrapper for Python',
     long_description=long_description,
     long_description_content_type="text/markdown",
-    packages=['intellivoid', 'intellivoid.coa', 'intellivoid.application', 'intellivoid.accounts'],
+    packages=['intellivoid'],
     package_dir={
         'intellivoid': 'intellivoid'
     },
