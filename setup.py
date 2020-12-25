@@ -23,7 +23,7 @@ with open("README.md", "r") as file:
 
 setup(
     name='intellivoid',
-    version='1.0.0',
+    version='1.0.1',
     description='Official Intellivoid Services API Wrapper for Python',
     long_description=long_description,
     long_description_content_type="text/markdown",
