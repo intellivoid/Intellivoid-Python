@@ -17,7 +17,7 @@
 #  along with this package. If not, see <http://www.gnu.org/licenses/>.
 
 from intellivoid import exceptions as service_exceptions
-from . import exceptions as coa_exceptions
+from intellivoid.sync.coa import exceptions as coa_exceptions
 import requests
 
 try:
@@ -101,7 +101,7 @@ class CrossOverAuthentication(object):
         :return:
         """
         parameters["application_id"] = application_id
-        return self._send("application", **parameters)["results"]
+        return self._send("../application", **parameters)["results"]
 
     def get_access_token(self, application_id, secret_key, access_token, **parameters):
         """

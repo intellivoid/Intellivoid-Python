@@ -17,7 +17,7 @@
 #  along with this package.  If not, see <http://www.gnu.org/licenses/>.
 
 from intellivoid import exceptions as service_exceptions
-from . import exceptions as coa_exceptions
+from intellivoid.sync.coa import exceptions as coa_exceptions
 import httpx
 
 try:

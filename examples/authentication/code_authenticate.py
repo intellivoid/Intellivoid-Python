@@ -1,4 +1,4 @@
-from intellivoid.coa.sync import CrossOverAuthentication
+from intellivoid.sync.coa import CrossOverAuthentication
 
 # Use your own Application ID and Secret Key. You'll be able to set your own
 # logo, name and permissions. These Application is for demonstration purposes only

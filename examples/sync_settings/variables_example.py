@@ -1,5 +1,5 @@
-from intellivoid.coa.sync import CrossOverAuthentication
-from intellivoid.application.settings.sync import Settings
+from intellivoid.sync.coa import CrossOverAuthentication
+from intellivoid.sync.application.settings import Settings
 import time
 import random
 

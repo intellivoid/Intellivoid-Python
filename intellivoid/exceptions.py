@@ -4,8 +4,8 @@
 # This could be improved in the future
 
 
-from .coa.exceptions import CrossOverAuthenticationError
-from .application.exceptions import ApplicationSettingsError
+from intellivoid.sync.coa.exceptions import CrossOverAuthenticationError
+from intellivoid.sync.application.exceptions import ApplicationSettingsError
 import json
 
 
