@@ -14,6 +14,24 @@ to be used, please see the following documentation links
  - [Accounts Introduction](https://docs.intellivoid.net/intellivoid/v1/accounts/introduction)
  - [Settings Introduction](https://docs.intellivoid.net/intellivoid/v1/settings/introduction)
 
+## Install
+
+You can either install it from PyPi
+```shell
+pip install intellivoid
+```
+
+Via the Makefile
+```shell
+make install
+```
+
+or traditionally with [setup.py](setup.py)
+```shell
+python3 setup.py install
+```
+
+
 ## Example
 
 This example is taken from [placeholder_authenticate.py](examples/authentication/placeholder_authenticate.py)
