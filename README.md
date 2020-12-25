@@ -1,26 +1,59 @@
-# COA - Intellivoid Python API Authentication
+# Intellivoid Services API Python Wrapper
 
-This repository contains the open source parts of COA, Intellivoid's Python implementation of API Authentication.
+This is the official Python Library for Intellivoid Services API, this wrapper is
+built based off the documentation from [here](https://docs.intellivoid.net/intellivoid/introduction).
 
-The main source code is under `intellivoid/coa`
+This library handles COA (Cross-Over Authentication), and the Intellivoid Services
+features, in short; you can use this library to authenticate users, retrieve their
+information and use the other features and services that are available on the
+Intellivoid Services API. To have a greater understanding of how this is meant
+to be used, please see the following documentation links
 
-To install run `python3 -m pip install -r requirements.txt` and then `python3 setup.py install`.
-Some usage examples are given under `examples/authentication`.
+ - [Applications Introduction](https://docs.intellivoid.net/intellivoid/applications/introduction)
+ - [COA Introduction](https://docs.intellivoid.net/intellivoid/v1/coa/introduction)
+ - [Accounts Introduction](https://docs.intellivoid.net/intellivoid/v1/accounts/introduction)
+ - [Settings Introduction](https://docs.intellivoid.net/intellivoid/v1/settings/introduction)
 
-Python 3.6 or above is needed. The COA interface is provided both an asynchronous and a synchronous
-implementation, to avoid issues when integrating this library in highly concurrent systems.
+## Example
 
-The synchronous package lies in `intellivoid.coa.sync`, while the async one resides in `intellivoid.coa.aio`.
-The packages are specular and their methods and contents are identical, except for the async part.
+This example is taken from [placeholder_authenticate.py](examples/authentication/placeholder_authenticate.py)
+which demonstrates how you can easily authenticate a user and obtain their Access Token.
 
-Feel free to file an issue if you find bugs and to contribute code via pull requests, but note that
-low quality or low effort contributions will be ignored.
+```python
+from intellivoid.sync.coa import CrossOverAuthentication
 
-## WORK IN PROGRESS
+# Use your own Application ID and Secret Key. You'll be able to set your own
+# logo, name and permissions. These Application is for demonstration purposes only
+# and nobody can access your information using these Applications unless they have your Access Token
+coa = CrossOverAuthentication()
+application_id = "APP65640a935039be5570428b6e74747811b0a290210e9e2d2f6722d8a54966ac171a4d5f1c"
+secret_key = "51649e76483ff7de673e299a8056675409c957ec020998223ea02b3ccbaec1220747373d"
 
-This project is not completed as it's currently being used to test the internal development
-builds of Intellivoid API. Incomplete code and or bugs may be a frequent yet expected occurrence
-in this project until the first version is officially released.
+print("Requesting authentication token")
+request_auth_results = coa.request_authentication(
+    application_id=application_id,
+    expand_ui=1)
+
+print("Authenticate: {}".format(request_auth_results["authentication_url"]))
+print("Waiting for authentication")
+process_authentication_results = coa.process_authentication(
+    application_id=application_id,
+    secret_key=secret_key,
+    request_token=request_auth_results["request_token"],
+    poll_results=True)
+
+# If poll_results is False, AwaitingAuthenticationError exception will be raised
+
+# If poll_results is True, the method will run in a loop until the user successfully authenticates
+# or if an error occurs such as the request token being expired
+
+print("Access Token: {0}".format(process_authentication_results["access_token"]))
+
+```
+
+Further more examples can be found [here](examples) along with README files that explains
+what the example does, how does it work and what it can be used for.
+
 
 ## Credits
 
