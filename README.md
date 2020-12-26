@@ -4,7 +4,7 @@ This is the official Python Library for Intellivoid Services API, this wrapper i
 built based off the documentation from [here](https://docs.intellivoid.net/intellivoid/introduction).
 
 This library handles COA (Cross-Over Authentication), and the Intellivoid Services
-features, in short; you can use this library to authenticate users, retrieve their
+features; in short: you can use this library to authenticate users, retrieve their
 information and use the other features and services that are available on the
 Intellivoid Services API. To have a greater understanding of how this is meant
 to be used, please see the following documentation links
@@ -31,10 +31,19 @@ or traditionally with [setup.py](setup.py)
 python3 setup.py install
 ```
 
+### Note on the implementation
 
-## Example
+The wrapper has been designed to be used both in a synchronous and in an asynchronous way:
+the package is split across two main subpackages, namely `intellivoid.sync`, for synchronous
+behavior, and `intellivoid.aio`, for asynchronous behavior. The latter requires the `trio`
+library to work, which is available on PyPi and listed as a project requirement ([Trio's documentation](https://trio.readthedocs.io)).
+The packages are identical in their structure and functionality, but note that exception
+classes are shared and come from the `intellivoid.sync` package: `intellivoid.aio` has no
+dedicated exceptions modules and uses the synchronous' package exceptions instead.
 
-This example is taken from [placeholder_authenticate.py](examples/authentication/placeholder_authenticate.py)
+## A quick example
+
+This example is taken from [placeholder_authenticate.py](examples/sync/authentication/placeholder_authenticate.py)
 which demonstrates how you can easily authenticate a user and obtain their Access Token.
 
 ```python
@@ -69,8 +78,8 @@ print("Access Token: {0}".format(process_authentication_results["access_token"])
 
 ```
 
-Further more examples can be found [here](examples) along with README files that explains
-what the example does, how does it work and what it can be used for.
+More examples can be found [here](examples) along with README files that explains
+what the example does, how it works and what it can be used for.
 
 
 ## Credits
@@ -81,5 +90,5 @@ included license, which you can find in this repo inside the LICENSE file.
 ## License
 
 ```
-Licensed under GPL v3. See the LICENSE for more information.
+Licensed under GPLv3 or later versions, See the LICENSE for more information.
 ```

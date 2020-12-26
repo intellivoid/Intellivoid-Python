@@ -1,9 +1,9 @@
 # Examples
 
-There are various examples on how you can use Intellivoid Accounts with your Python
-projects, this directory contains examples that explains and demonstrates how
-to authenticate and use the API to retrieve information.
+This directory contains various examples explaining in detail how to use
+this wrapper to retrieve and process information from Intellivoid's Service
+API. The examples are provided in both a synchronous and asynchronous fashion,
+and their functionality is virtually the same.
 
- - [Authentication Examples](authentication) - [[?]](authentication/README.md)
- - [Getting User Information](user_information) - [[?]](user_information/README.md)
- - [Application Settings/Variables](sync_settings) - [[?]](sync_settings/README.md)
+- [Sync Examples](/sync)
+- [Async Examples](/aio)

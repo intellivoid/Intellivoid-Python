@@ -53,14 +53,14 @@ class CrossOverAuthentication(object):
         :return:
         """
 
-        response = httpx.post("{}/{}".format(self.endpoint, path), json=payload)
-        request_id = None
-        if "x-request-id" in response.headers:
-            request_id = response.headers["x-request-id"]
-
-        return service_exceptions.ServiceException.parse_and_raise(response.status_code,
-                                                                   response.text,
-                                                                   request_id)
+        async with httpx.AsyncClient() as http_client:
+            response = await http_client.post("{}/{}".format(self.endpoint, path), data=payload)
+            request_id = None
+            if "x-request-id" in response.headers:
+                request_id = response.headers["x-request-id"]
+            return service_exceptions.ServiceException.parse_and_raise(response.status_code,
+                                                                       response.text,
+                                                                       request_id)
 
     async def request_authentication(self, application_id, **parameters):
         """
@@ -91,7 +91,6 @@ class CrossOverAuthentication(object):
         parameters["application_id"] = application_id
         parameters["secret_key"] = secret_key,
         parameters["request_token"] = request_token
-
         if poll_results:
             while True:
                 try:
@@ -128,7 +127,6 @@ class CrossOverAuthentication(object):
         parameters["application_id"] = application_id
         parameters["secret_key"] = secret_key,
         parameters["access_token"] = access_token
-
         return (await self._send("auth/get_access_token", **parameters))["results"]
 
     def create_authentication_url(self, application_id, redirect, **parameters):
@@ -146,5 +144,4 @@ class CrossOverAuthentication(object):
         parameters["action"] = "request_authentication"
         parameters["application_id"] = application_id
         parameters["redirect"] = redirect
-
         return "{}/auth/coa?{}".format(self.accounts_endpoint, urlencode(parameters))

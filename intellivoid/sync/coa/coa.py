@@ -36,6 +36,7 @@ class CrossOverAuthentication(object):
         :param endpoint:
         :param accounts_endpoint:
         """
+
         self.accounts_endpoint = accounts_endpoint
         self.endpoint = endpoint
 
@@ -48,6 +49,7 @@ class CrossOverAuthentication(object):
         :param payload:
         :return:
         """
+
         response = requests.post("{}/{}".format(self.endpoint, path), payload)
         request_id = None
         if "x-request-id" in response.headers:
@@ -65,6 +67,7 @@ class CrossOverAuthentication(object):
         :param parameters:
         :return:
         """
+
         parameters["application_id"] = application_id
         return self._send("auth/request_authentication", **parameters)["results"]
 
@@ -79,6 +82,7 @@ class CrossOverAuthentication(object):
         :param parameters:
         :return:
         """
+
         parameters["application_id"] = application_id
         parameters["secret_key"] = secret_key,
         parameters["request_token"] = request_token
@@ -100,6 +104,7 @@ class CrossOverAuthentication(object):
         :param parameters:
         :return:
         """
+
         parameters["application_id"] = application_id
         return self._send("../application", **parameters)["results"]
 
@@ -114,6 +119,7 @@ class CrossOverAuthentication(object):
         :param parameters:
         :return:
         """
+
         parameters["application_id"] = application_id
         parameters["secret_key"] = secret_key,
         parameters["access_token"] = access_token
@@ -131,6 +137,7 @@ class CrossOverAuthentication(object):
         :param parameters:
         :return:
         """
+
         parameters["action"] = "request_authentication"
         parameters["application_id"] = application_id
         parameters["redirect"] = redirect

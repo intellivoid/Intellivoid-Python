@@ -1,3 +1,21 @@
+#  Intellivoid - COA API Interface
+#  Copyright (C) 2020 Intellivoid <https://github.com/intellivoid>
+#
+#  This file is part of the Intellivoid package.
+#
+#  This package is free software: you can redistribute it and/or modify
+#  it under the terms of the GNU Lesser General Public License as published
+#  by the Free Software Foundation, either version 3 of the License, or
+#  (at your option) any later version.
+#
+#  This package is distributed in the hope that it will be useful,
+#  but WITHOUT ANY WARRANTY; without even the implied warranty of
+#  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+#  GNU Lesser General Public License for more details.
+#
+#  You should have received a copy of the GNU Lesser General Public License
+#  along with this package.  If not, see <http://www.gnu.org/licenses/>.
+
 from intellivoid import exceptions as service_exceptions
 import httpx
 try:
@@ -40,15 +58,14 @@ class User(object):
         payload["application_id"] = self.application_id
         payload["secret_key"] = self.secret_key,
         payload["access_token"] = self.access_token
-
         async with httpx.AsyncClient() as http_client:
-            response = await http_client.post("{}/{}".format(self.endpoint, path), json=payload)
-        request_id = None
-        if "x-request-id" in response.headers:
-            request_id = response.headers["x-request-id"]
-        return service_exceptions.ServiceException.parse_and_raise(response.status_code,
-                                                                   response.text,
-                                                                   request_id)
+            response = await http_client.post("{}/{}".format(self.endpoint, path), data=payload)
+            request_id = None
+            if "x-request-id" in response.headers:
+                request_id = response.headers["x-request-id"]
+            return service_exceptions.ServiceException.parse_and_raise(response.status_code,
+                                                                       response.text,
+                                                                       request_id)
 
     async def get_information(self, **parameters):
         """

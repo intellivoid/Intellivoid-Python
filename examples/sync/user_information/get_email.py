@@ -1,5 +1,5 @@
 from intellivoid.sync.coa import CrossOverAuthentication
-from intellivoid.accounts import User
+from intellivoid.sync.accounts import User
 
 # This will authenticate using a basic Placeholder Authentication flow, for more details see
 # the authentication examples.
@@ -27,20 +27,8 @@ access_token = process_authentication_results["access_token"]
 user_access = User(
     application_id=application_id,
     secret_key=secret_key,
-    access_token=access_token
+    access_token=access_token,
 )
 
-user_information = user_access.get_information()
-
-results = f"""
-ID: {user_information["id"]}
-Username: {user_information["username"]}
-
---- Public Avatar URL(s) ---
-Original Size: {user_information["avatar"]["original"]}
-Normal Size (640x640): {user_information["avatar"]["normal"]}
-Preview Size (360x360): {user_information["avatar"]["preview"]}
-Small Size (160x160): {user_information["avatar"]["small"]}
-Tiny Size (64x64): {user_information["avatar"]["tiny"]}
-"""
-print(results)
+email_address = user_access.get_email()
+print(email_address)
