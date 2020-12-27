@@ -23,7 +23,7 @@ with open("README.md", "r") as file:
 
 setup(
     name='intellivoid',
-    version='1.0.2',
+    version='1.0.4',
     description='Official Intellivoid Services API Wrapper for Python',
     long_description=long_description,
     long_description_content_type="text/markdown",
@@ -36,6 +36,7 @@ setup(
     url='https://accounts.intellivoid.net/',
     install_requires=[
         'requests>=2.3.0',
-        'httpx'
+        'httpx',
+        'trio'
     ]
 )
